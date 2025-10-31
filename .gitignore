@@ -1,0 +1,12 @@
+node_modules/
+.env
+*.log
+.backend_keys
+__pycache__/
+*.pyc
+.DS_Store
+dist/
+build/
+.venv/
+*.sqlite
+
