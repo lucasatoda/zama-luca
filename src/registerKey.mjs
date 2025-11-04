@@ -10,6 +10,9 @@ import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const { createInstance, SepoliaConfig } = require("@zama-fhe/relayer-sdk/node");
 
+// Import config to get custom RPC
+import config from './config.mjs';
+
 async function main() {
   console.log("🔑 Registering Backend Oracle key with Zama Gateway...");
 
@@ -23,7 +26,10 @@ async function main() {
   console.log("📍 Backend Oracle Address:", BACKEND_ORACLE_ADDRESS);
 
   // 1️⃣ Kết nối đến Gateway SDK với private key backend
-  const sdk = await createInstance(SepoliaConfig, {
+  // Override RPC from SepoliaConfig (which uses blastapi) with our custom RPC
+  const sdk = await createInstance({
+    ...SepoliaConfig,
+    network: config.rpc, // Use RPC from .env instead of blastapi
     privateKey: BACKEND_PRIVATE_KEY,
   });
 

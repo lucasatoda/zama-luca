@@ -92,7 +92,8 @@ export async function startListener() {
       });
 
       // Decrypt handles (userDecrypt with backend oracle)
-      const sdk = await createInstance(SepoliaConfig);
+      // Override RPC from SepoliaConfig (which uses blastapi) with our custom RPC
+      const sdk = await createInstance({ ...SepoliaConfig, network: config.rpc });
       const handlePairs = [
         { handle: encWeight, contractAddress },
         { handle: encHeight, contractAddress },
